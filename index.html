@@ -13,7 +13,7 @@ span.cem {
 color: #d66;
 }
 span.cem2 {
-color: #2a2;
+color: #66d;
 }
 .reveal h1,
 .reveal h2,
@@ -34,6 +34,7 @@ text-transform: none;
 <h2><span class="cem">A Quick Introduction to Bitcoin and Blockchain</span></h2>
 <p><strong>Tobias Kuhn</strong></p>
 <p>Semantic Web meeting<br/> VU Amsterdam, 2018</p>
+<small><p>This talk is partly based on <a href="http://www.michaelnielsen.org/ddi/how-the-bitcoin-protocol-actually-works/">this blog post by Michael Nielsen</a>.</p></small>
 <!--<small><p>These slides: <a href="http://purl.org/tkuhn/presentations/iswc2017-nanodiff">http://purl.org/tkuhn/presentations/iswc2017-nanodiff</a></p></small>-->
 </section>
 
@@ -41,6 +42,85 @@ text-transform: none;
 <h3>Bitcoin</h3>
 <img class="plain stretch" src="img/bitcoin.png"/>
 <p class="sourcenote"><a href="https://bitcoin.org/img/icons/opengraph.png">[image source]</a></p>
+<p>Bitcoin, Blockchain, Smart Contracts, ...</p>
+</section>
+
+<section>
+<h3>Public Key Cryptography</h3>
+<p>...</p>
+</section>
+
+<section>
+<h3>Cryptographic Hashing</h3>
+<p>...</p>
+</section>
+
+<section>
+<h3>Digital Currency</h3>
+<p>How can a digital currency possibly work?</p>
+<ul>
+<li class="fragment">Units of money ("coins") are digital information</li>
+<li class="fragment">But digital information can easily be copied...</li>
+<li class="fragment"><span class="cem">How can we prevent that people just copy their coins to get an unlimited amount of money?</span></li>
+</ul>
+</section>
+
+<section>
+<h3>Centralized Digital Currencies<br/>(pre-Bitcoin)</h3>
+<p>The problem can be solved by relying on a <span class="cem">central authority (bank)</span> that keeps track of who owns how much.</p>
+<p class="fragment"><span class="cem">But can this also be done in a decentralized way?</span></p>
+</section>
+
+<section>
+<h3>Coin Transations are Messages</h3>
+<p>Transactions of a decentralized coin can be seen as <span class="cem">cryptographically signed public messages</span>.</p>
+<p><strong>Example:</strong> Alice publishes the message <span class="cem2">"I, Alice, am giving Bob one coin"</span> signed with her private key.</p>
+<p class="fragment"><strong><span class="cem">Problem:</span></strong> If Bob received the same message twice, did he receive two coins or just two copies of the message?</p>
+<p class="fragment"><strong><span class="cem">Problem:</span></strong> And how do we know Alice (still) owns the given coin in the first place?</p>
+</section>
+
+<section>
+<h3>Coin Identifiers</h3>
+<p>Coins need <span class="cem">unique identifiers</span>.</p>
+<p><strong>Example:</strong> Alice publishes the message <span class="cem2">"I, Alice, am giving Bob the coin with serial number 1234567"</span> signed with her private key.</p>
+<p class="fragment"><strong><span class="cem">Problem:</span></strong> Where do these identifiers come from?</p>
+<p class="fragment"><strong><span class="cem">Problem:</span></strong> Alice can additionally publish a message saying <span class="cem2">"I, Alice, am giving <strong>Charlie</strong> the coin with serial number 1234567"</span> (double spending).</p>
+</section>
+
+<section>
+<h3>Public Ledger</h3>
+<p>There needs to be a <span class="cem">public record (ledger)</span> of all transactions (messages) ever executed.</p>
+<ul>
+<li class="fragment">Order of transactions is important</li>
+<li class="fragment">All transactions in the public ledger need to be valid and consistent</li>
+<li class="fragment">Everybody can verify all transactions</li>
+<li class="fragment">Definition: a transaction is executed when (and if) it becomes part of the public ledger</li>
+<li class="fragment">Ledger has to be immutable and add-only</li>
+</ul>
+</section>
+
+<section>
+<h3>Public Ledger: Problems</h3>
+<p class="fragment"><strong><span class="cem">Problem:</span></strong> How can we agree in a decentralized setting on what is part of the public ledger?</p>
+<p class="fragment"><strong><span class="cem">Problem:</span></strong> How can we prevent malicious agents to distribute a fake version of the ledger that allows them to double-spend their coins?</p>
+</section>
+
+<section>
+<h3>Solution: Blockchain</h3>
+<ul>
+<li class="fragment">Divide the ledger into small consecutive blocks</li>
+<li class="fragment">Add a new block every ~ 10 minutes (for Bitcoin)</li>
+<li class="fragment">Identify blocks with hash values of their content</li>
+<li class="fragment">Each block contains a reference to the previous block, back to the very first block (genesis block) with hash <span class="cem2">000000000019d6689c085ae165831e93 4ff763ae46a2a6c172b3f1b60a8ce26f</span></li>
+</ul>
+<p class="fragment"><strong><span class="cem">Problem:</span></strong> Who gets to add new blocks?</p>
+<p class="fragment"><strong><span class="cem">Problem:</span></strong> How can we prevent history rewriting?</p>
+</section>
+</section>
+
+<section>
+<h3>Proof of Work</h3>
+<p>We have to make it <span class="cem">expensive</span> to add new blocks!</p>
 <p>...</p>
 </section>
 
