@@ -34,7 +34,7 @@ text-transform: none;
 <img class="plain stretch" src="img/bitcoin.png"/>
 <h2><span class="cem">A Quick Introduction to Bitcoin and Blockchain</span></h2>
 <p><strong>Tobias Kuhn</strong></p>
-<p>Semantic Web meeting<br/> VU Amsterdam, 2018</p>
+<p>Semantic Web meeting<br/> VU Amsterdam, 22 January 2018</p>
 <small><p>This talk is partly based on <a href="http://www.michaelnielsen.org/ddi/how-the-bitcoin-protocol-actually-works/">this blog post by Michael Nielsen</a>.</p></small>
 <!--<small><p>These slides: <a href="http://purl.org/tkuhn/presentations/iswc2017-nanodiff">http://purl.org/tkuhn/presentations/iswc2017-nanodiff</a></p></small>-->
 </section>
@@ -52,29 +52,43 @@ encryption key is private (sign)</p>
 
 <section>
 <h3>Cryptographic Hashing</h3>
-<p>...</p>
+<p class="fragment"><strong><span class="cem">Hashing is a "one-way function":</span></strong> hash value can be calculated from content, but no matching content can be calculated from hash value (in practice).</p>
+<pre class="fragment" style="font-size: 50%">
+h("Hello, world") =
+  4ae7c3b6ac0beff671efa8cf57386151c06e58ca53a78d83f36107316cec125f
+</pre>
+<div class="fragment">
+<p>Tiny change in content gives<span class="cem2"> entirely different</span> hash:</p>
+<pre style="font-size: 50%">
+h("Hallo, world") =
+  d007069f451285d1ee03952feddca5f63c62bb9d86045f5a508d3983857b48fe
+</pre>
+</div>
+<p class="fragment">Hash value is <span class="cem2">unpredictable</span> without actually calculating it.</p>
 </section>
 
 <section>
 <h3>Digital Currency</h3>
-<p>How can a digital currency possibly work?</p>
+<p><strong><span class="cem">How can a digital currency possibly work?</span></strong></p>
 <ul>
 <li class="fragment">Units of money ("coins") are digital information</li>
 <li class="fragment">But digital information can easily be copied...</li>
-<li class="fragment"><span class="cem">How can we prevent that people just copy their coins to get an unlimited amount of money?</span></li>
+<li class="fragment"><span class="cem2">How can we prevent that people just copy their coins to get an unlimited amount of money?</span></li>
 </ul>
 </section>
 
 <section>
 <h3>Centralized Digital Currencies<br/>(pre-Bitcoin)</h3>
 <p>The problem can be solved by relying on a <span class="cem">central authority (bank)</span> that keeps track of who owns how much.</p>
-<p class="fragment"><span class="cem">But can this also be done in a decentralized way?</span></p>
+<p class="fragment"><span class="cem2">But can this also be done in a decentralized way?</span></p>
 </section>
 
 <section>
 <h3>Coin Transations are Messages</h3>
+<div class="fragment">
 <p>Transactions of a decentralized coin can be seen as <span class="cem">cryptographically signed public messages</span>.</p>
 <p><strong>Example:</strong> Alice publishes the message <span class="cem2">"I, Alice, am giving Bob one coin"</span> signed with her private key.</p>
+</div>
 <p class="fragment"><strong><span class="cem">Problem:</span></strong> If Bob received the same message twice, did he receive two coins or just two copies of the message?</p>
 <p class="fragment"><strong><span class="cem">Problem:</span></strong> And how do we know Alice (still) owns the given coin in the first place?</p>
 </section>
@@ -91,11 +105,10 @@ encryption key is private (sign)</p>
 <h3>Public Ledger</h3>
 <p>There needs to be a <span class="cem">public record (ledger)</span> of all transactions (messages) ever executed.</p>
 <ul>
-<li class="fragment">Order of transactions is important</li>
-<li class="fragment">All transactions in the public ledger need to be valid and consistent</li>
-<li class="fragment">Everybody can verify all transactions</li>
-<li class="fragment">Definition: a transaction is executed when (and if) it becomes part of the public ledger</li>
-<li class="fragment">Ledger has to be immutable and add-only</li>
+<li class="fragment">All transactions in the public ledger need to be <span class="cem2">valid and consistent</span></li>
+<li class="fragment"><span class="cem2">Everybody</span> can verify all transactions</li>
+<li class="fragment">Ledger has to be <span class="cem2">immutable</span> and add-only</li>
+<li class="fragment"><strong>Definition:</strong> a transaction is <span class="cem2">executed</span> when (and if) it becomes part of the public ledger</li>
 </ul>
 </section>
 
@@ -108,10 +121,10 @@ encryption key is private (sign)</p>
 <section>
 <h3>Solution: Blockchain</h3>
 <ul>
-<li class="fragment">Divide the ledger into small consecutive blocks</li>
+<li class="fragment">Divide the ledger into small <span class="cem">consecutive blocks</span></li>
 <li class="fragment">Add a new block every ~ 10 minutes (for Bitcoin)</li>
-<li class="fragment">Identify blocks with hash values of their content</li>
-<li class="fragment">Each block contains a reference to the previous block, back to the very first block (genesis block) with hash <span class="cem2">000000000019d6689c085ae165831e93 4ff763ae46a2a6c172b3f1b60a8ce26f</span></li>
+<li class="fragment">Identify blocks with <span class="cem">hash values</span> of their content</li>
+<li class="fragment">Each block contains a <span class="cem">reference</span> to the previous block, back to the very first block (genesis block) with hash <span class="cem2">000000000019d6689c085ae165831e93 4ff763ae46a2a6c172b3f1b60a8ce26f</span></li>
 </ul>
 <p class="fragment"><strong><span class="cem">Problem:</span></strong> Who gets to add new blocks?</p>
 <p class="fragment"><strong><span class="cem">Problem:</span></strong> How can we prevent history rewriting?</p>
@@ -121,7 +134,87 @@ encryption key is private (sign)</p>
 <section>
 <h3>Proof of Work</h3>
 <p>We have to make it <span class="cem">expensive</span> to add new blocks!</p>
+<p class="fragment">Restrictions on the hash value of a block, for example: <span class="cem">hash has to be very small</span> (i.e. many leading zeros)</p>
+<div class="fragment">
+<pre style="font-size: 50%">
+h("Hello, world!0") =
+  1312af178c253f84028d480a6adc1e25e81caa44c749ec81976192e2ec934c64
+</pre>
+<p style="font-size: 70%">where the number after <code>!</code> is the <span class="cem">nonce</span>: arbitrary number to vary hash input</p>
+</div>
+<pre class="fragment" style="font-size: 50%">
+h("Hello, world!1") =
+  e9afc424b79e4f6ab42d99c81156d3a17228d6e1eef4139be78e948a9332a7d8
+</pre>
+<div class="fragment">
 <p>...</p>
+<pre style="font-size: 50%">
+h("Hello, world!4250") =
+  0000c3af42fc31103f1fdc0151fa747ff87349a4714df7cc52ea464e12dcd4e9
+</pre>
+</div>
+</section>
+
+<section>
+<h3>Anatomy of a Block</h3>
+<pre style="font-size: 50%">
+<strong>Transaction 1:</strong>
+<span class="cem">9 coins from address efb2378 to address f75c864</span>
+Signature of line above with efb2378's private key: 7aa6745
+<span style="color:gray">(efb2378 contained 10 coins: 1 coin transaction fee)</span>
+
+<strong>Transaction 2:</strong>
+<span class="cem">1.0 coins from address 47d8fa5 to address 9af45c0
+1.4 coins from address 47d8fa5 to address 2f3f49a</span>
+Signature of two lines above with 47d8fa5's private key: d94baa0
+<span style="color:gray">(47d8fa5 contained 2.5 coins: 0.1 coins transaction fee)</span>
+
+...
+
+<strong>New coins for miner:</strong> 12.5
+<strong>Coin address of miner:</strong> d505f26
+<strong>Previous block:</strong>
+0000000000000000005815cc67b1eb89bd2336aa26b71c0d336eb4112e131827
+<strong>Nonce:</strong> 1328570820
+
+<strong>Hash of everything above (= block identifier):</strong>
+<span class="cem2">0000000000000000005581a229a7e32e68ef233e5034407df5a2506baf814114</span>
+</pre>
+</section>
+
+<section>
+<h3>A Chain of Blocks</h3>
+<div class="fragment">
+<p>Newly mined blocks are <span class="cem">appended</span> to the chain:</p>
+<img class="plain" width="50%" src="img/block_chain.png"/>
+</div>
+<div class="fragment">
+<p>Competing blocks can lead to a <span class="cem">temporary fork</span>:</p>
+<img class="plain" width="50%" src="img/block_chain_fork.png"/>
+</div>
+</section>
+
+<section>
+<h3>Resolving Forks</h3>
+<div class="fragment">
+<p>Forks are resolved by <span class="cem">"longest chain counts"</span> principle:</p>
+<img class="plain" width="60%" src="img/block_chain_extended.png"/>
+</div>
+<div class="fragment">
+<p>History rewriting requires <span class="cem">majority of computing power</span>:</p>
+<img class="plain" width="60%" src="img/block_chain_cheating.png"/>
+</div>
+</section>
+
+<section>
+<h3>Bitcoin and Beyond</h3>
+<ul>
+<li class="fragment">Bitcoin transactions are written in a scripting language that allows for other applications: <span class="cem">smart contracts</span> (Ethereum)</li>
+<li class="fragment"><span class="cem">Alternative</span> proof of work problems, frequency of blocks, block sizes, etc.</span></li>
+<li class="fragment">Alternatives for proof of work: <span class="cem">proof of stake, proof of burn, ...</span></li>
+<li class="fragment">Restrict who can mine: <span class="cem">permissioned</span> blockchains</span></li>
+<li class="fragment">...</li>
+</ul>
 </section>
 
 <section>
