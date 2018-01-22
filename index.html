@@ -102,6 +102,17 @@ h("Hallo, world") =
 </section>
 
 <section>
+<h3>Public Keys as Identifiers</h3>
+<p>We can use <span class="cem">public keys</span> as identifiers.</p>
+<div class="fragment">
+<p>Coins are stored at <span class="cem">addresses</span> identified by public key.</p>
+<p><strong>Example:</strong> Alice publishes the message <span class="cem2">"I transfer the coins from address efb2378 to address f75c864"</span> signed with her private key for efb2378.</p>
+</div>
+<p class="fragment"><strong><span class="cem">Problem:</span></strong> How many coins are on that address?</span></p>
+<p class="fragment"><strong><span class="cem">Problem:</span></strong> Double spending is still possible: <span class="cem2">"I transfer the coins from address efb2378 to address af57b7c"</span></p>
+</section>
+
+<section>
 <h3>Public Ledger</h3>
 <p>There needs to be a <span class="cem">public record (ledger)</span> of all transactions (messages) ever executed.</p>
 <ul>
